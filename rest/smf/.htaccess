@@ -1,0 +1,9 @@
+Satisfy Any
+
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} !^/forum/rest/smf/index.php
+RewriteRule .* /forum/rest/smf/index.php [L]
+
+
+
