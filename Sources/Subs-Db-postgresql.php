@@ -60,6 +60,10 @@ function smf_db_initiate($db_server, $db_name, $db_user, $db_passwd, &$db_prefix
 	else
 		$connection = @pg_connect( 'host=' . $db_server . ' dbname=' . $db_name . ' user=\'' . $db_user . '\' password=\'' . $db_passwd . '\'');
 
+	if(strpos($db_prefix, ".")){
+		list($db_schema,$db_prefix_only) = split("\.",$db_prefix,2);
+		pg_query("SET SCHEMA '$db_schema'");
+	}
 	// Something's wrong, show an error if its fatal (which we assume it is)
 	if (!$connection)
 	{
