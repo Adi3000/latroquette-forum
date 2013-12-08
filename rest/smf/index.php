@@ -43,11 +43,7 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT   *
  * OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. *
  **********************************************************************************/
-if ( ! filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE) )
-{
-	header('HTTP/1.0 403 Forbidden');
-	die;
-}
+
 error_reporting(E_ALL | E_STRICT);
 require_once 'SmfRestServer.php';
 $restServer = new SmfRestServer($_REQUEST);
