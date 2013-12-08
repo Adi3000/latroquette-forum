@@ -20,13 +20,13 @@ $mmessage = 'Okay faithful users...we\'re attempting to restore an older backup 
 ########## Forum Info ##########
 $mbname = 'L\'entraide du TroQ';		# The name of your forum.
 $language = 'french-utf8';		# The default language file set for the forum.
-$boardurl = 'http://localhost/forum';		# URL to your forum's folder. (without the trailing /!)
+$boardurl = 'https://latroquette.net/forum';		# URL to your forum's folder. (without the trailing /!)
 $webmaster_email = 'adi3000@free.fr';		# Email address to send emails from. (like noreply@yourdomain.com.)
 $cookiename = 'SMFCookie455';		# Name of the cookie to set for authentication.
 
 ########## Database Info ##########
 $db_type = 'postgresql';
-$db_server = 'localhost:5432';
+$db_server = 'localhost:7733';
 $db_name = 'latroquette';
 $db_user = 'latroquette';
 $db_passwd = 'latroquette';
