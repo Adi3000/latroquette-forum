@@ -539,7 +539,7 @@ class SmfRestServer
             throw new Exception($e->getMessage());
         }
 
-        $this->regOptions = unserialize($this->regOptions);
+        $this->regOptions = json_decode($this->regOptions, true);
 
         $this->data = smfapi_registerMember($this->regOptions);
     }
@@ -571,6 +571,48 @@ class SmfRestServer
      * @param
      * @return
      */
+    protected function change_password()
+    {
+        try {
+            $this->loadApi();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+        
+        $this->data = smfapi_changePassword($this->member, $this->password);
+    }
+    /**
+     * Short description
+     *
+     * Long description
+     *
+     * @param
+     * @return
+     */
+    protected function activate_member()
+    {
+        try {
+            $this->loadApi();
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+        
+        $this->info = array(
+        			"is_activated" => 1,
+        			"validation_code" => "",
+        		);
+
+        $this->data = smfapi_updateMemberData($this->member, $this->info);
+    }
+    
+    /**
+     * Short description
+     *
+     * Long description
+     *
+     * @param
+     * @return
+     */
     protected function update_memberData()
     {
         try {
@@ -579,7 +621,7 @@ class SmfRestServer
             throw new Exception($e->getMessage());
         }
         
-        $this->info = unserialize($this->info);
+        $this->info = json_decode($this->info);
 
         $this->data = smfapi_updateMemberData($this->member, $this->info);
     }

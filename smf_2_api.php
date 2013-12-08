@@ -849,7 +849,7 @@ function smfapi_login($username='', $cookieLength=525600)
 {
     global $scripturl, $user_info, $user_settings, $smcFunc;
 	global $cookiename, $maintenance, $modSettings, $sc, $sourcedir;
-
+	
     $user_data = smfapi_getUserData($username);
 
     if (!$user_data || empty($user_data)) {
@@ -859,9 +859,8 @@ function smfapi_login($username='', $cookieLength=525600)
 	// cookie set, session too
 	smfapi_setLoginCookie(60 * $cookieLength, $user_data['id_member'], sha1($user_data['passwd']
                    . $user_data['password_salt']));
-
 	// you've logged in, haven't you?
-	smfapi_updateMemberData($user_data['id_member'], array('last_login' => time(), 'member_ip' => $user_info['ip']));
+	smfapi_updateMemberData($user_data['id_member'], array('last_login' => time()));
 
 	// get rid of the online entry for that old guest....
 	$smcFunc['db_query']('', '
@@ -1430,6 +1429,31 @@ function smfapi_deleteMembers($users)
 	smfapi_updateStats('member');
 
 	return true;
+}
+
+function smfapi_changePassword($memberId, $password){
+	global $scripturl, $modSettings, $sourcedir;
+	global $user_info, $options, $settings, $smcFunc;
+	// check user
+	if (empty($memberId)) {
+		$reg_errors[] = 'member id empty';
+	}
+	// check password
+	if (empty($password)) {
+		$reg_errors[] = 'password id empty';
+	}
+	// if there's any errors left return them at once
+	if (!empty($reg_errors)) {
+		return $reg_errors;
+	}
+	$member = smfapi_getUserById($memberId);
+	$hashed_password = sha1(strtolower($member['member_name']) . $password);
+	$password_salt = substr(md5(mt_rand()), 0, 4);
+	$data = array (
+			"passwd" => $hashed_password,
+			"password_salt" => $password_salt
+	);
+	return smfapi_updateMemberData($memberId, $data);
 }
 
 /**
@@ -2550,7 +2574,6 @@ function smfapi_updateMemberData($member='', $data='')
 		$setString .= ' ' . $var . ' = {' . $type . ':p_' . $var . '},';
 		$parameters['p_' . $var] = $val;
 	}
-
 	$smcFunc['db_query']('', '
 		UPDATE {db_prefix}members
 		SET' . substr($setString, 0, -1) . '
