@@ -1,7 +1,7 @@
 <?php 
 require_once 'smf_2_api.php';
 define('CHECK_USER_ENDPOINT', "http://localhost/rest/authentication/smf/auth");
-define('CHECK_USER_ENDPOINT', "http://localhost/rest/authentication/smf/register");
+define('REGISTER_USER_ENDPOINT', "http://localhost/rest/authentication/smf/register");
 define('LATROQUETTE_TOKEN', "ltq_token");
 define('LATROQUETTE_LOGIN', "ltq_user");
 define('SMF_INTEGRATION_SETTINGS', serialize(array(
